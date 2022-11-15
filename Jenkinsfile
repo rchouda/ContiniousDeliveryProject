@@ -38,7 +38,7 @@ sh " ansible-playbook  /var/lib/jenkins/workspace/CDProject/Ansible/docker.yml -
                 }
             } 
         } 
-       stage('docker registry')
+       stage('Docker Registry(pushing image to DockerHub)')
  {
  steps{
  script{
