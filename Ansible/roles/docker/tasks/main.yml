@@ -3,7 +3,7 @@
           docker_image:
             name: angularapp
             build:
-             path: /var/lib/jenkins/workspace/ProjetCD
+             path: /var/lib/jenkins/workspace/CDProject
              pull: no
             source: build
             state: present

@@ -1,0 +1,11 @@
+---
+# tasks file for docker-registry
+- name: Pushing
+  docker_image:
+   name: angularapp
+   repository: rchouda911/myapp
+   source: build
+   build:         
+     path: /var/lib/jenkins/workspace/CDProject
+   tag: latest
+   push: yes

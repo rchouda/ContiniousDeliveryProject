@@ -10,24 +10,43 @@ agent any
  }
  }
   }
-stage('build'){
+
+stage('Build Angular Project'){
  steps{
  script{
-sh " ansible-playbook  /home/rached/Desktop/myapp/Ansible/build.yml -i /home/rached/Desktop/myapp/Ansible/inventory/host.yml "
+sh " ansible-playbook  /var/lib/jenkins/workspace/CDProject/Ansible/build.yml -i /var/lib/jenkins/workspace/CDProject/Ansible/inventory/host.yml "
  }
  }
  
  }
 
-      stage('Docker'){
+      stage('Building Docker Image'){
  steps{
  script{
-sh " ansible-playbook  /home/rached/Desktop/myapp/Ansible/docker.yml -i /home/rached/Desktop/myapp/Ansible/inventory/host.yml -K "
+sh " ansible-playbook  /var/lib/jenkins/workspace/CDProject/Ansible/docker.yml -i /var/lib/jenkins/workspace/CDProject/Ansible/inventory/host.yml "
  }
  }
  
  }
-   
+      stage('Docker Login'){
+              steps{
+                script{
+		withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                   sh 'docker login -u rchouda911 -p $dockerhubpwd docker.io'
+}
+
+                }
+            } 
+        } 
+       stage('docker registry')
+ {
+ steps{
+ script{
+ sh " ansible-playbook /var/lib/jenkins/workspace/CDProject/Ansible/docker-registry.yml -i /var/lib/jenkins/workspace/CDProject/Ansible/inventory/host.yml "
+ }
+ }
+ }
+      
 }
   
 }
